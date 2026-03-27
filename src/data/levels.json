@@ -1,0 +1,416 @@
+{
+  "version": "v1.0.0",
+  "levels": [
+    {
+      "id": 1,
+      "name": "In the Shadows",
+      "description": "Gölge bırak, dikkatli ol.",
+      "reqShadows": 5,
+      "platforms": [
+        {
+          "x": 300, "y": 60,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        {
+          "x": 20, "y": 20,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        { 
+          "x": 50, "y": 120,
+          "width": 60, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 150, "y": 80,
+          "width": 80, "height": 10,
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Shadow Jumper",
+      "description": "Trambolinler biraz şeydir...",
+      "reqShadows": 5,
+      "platforms": [
+        {
+          "x": 300, "y": 20,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        {
+          "x": 20, "y": 20,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        { 
+          "x": 40, "y": 80,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 80, "y": 120,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 120, "y": 60,
+          "width": 60, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 240, "y": 100,
+          "width": 40, "height": 10,
+          "type": "trampoline"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Solid Walls",
+      "description": "Duvarlar geçilmez.",
+      "reqShadows": 5,
+      "platforms": [
+        { 
+          "x": 300, "y": 20,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        { 
+          "x": 20, "y": 20,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        { 
+          "x": 40, "y": 120,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 60, "y": 0,
+          "width": 5, "height": 80,
+          "type": "wall"
+        },
+        { 
+          "x": 100, "y": 80,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 180, "y": 80,
+          "width": 5, "height": 100,
+          "type": "wall"
+        },
+        { 
+          "x": 220, "y": 100,
+          "width": 40, "height": 10,
+          "type": "trampoline"
+        },
+        { 
+          "x": 260, "y": 130,
+          "width": 40, "height": 10,
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Shadow Walls",
+      "description": "Shadow duvarlar.",
+      "reqShadows": 5,
+      "platforms": [
+        {
+          "x": 300, "y": 60,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        {
+          "x": 20, "y": 20,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        {
+          "x": 20, "y": 80,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 80, "y": 0,
+          "width": 5, "height": 80,
+          "type": "shadowWall"
+        },
+        {
+          "x": 60, "y": 120,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 100, "y": 60,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 200, "y": 120,
+          "width": 40, "height": 10,
+          "type": "trampoline"
+        },
+        {
+          "x": 260, "y": 80,
+          "width": 60, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 280, "y": 0,
+          "width": 5, "height": 60,
+          "type": "wall"
+        },
+        {
+          "x": 180, "y": 60,
+          "width": 5, "height": 100,
+          "type": "wall"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "The Gauntlet",
+      "description": "Bildiklerini pekiştir.",
+      "reqShadows": 5,
+      "platforms": [
+        {
+          "x": 300, "y": 60,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        {
+          "x": 20, "y": 20,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        {
+          "x": 30, "y": 120,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 70, "y": 80,
+          "width": 5, "height": 80,
+          "type": "shadowWall"
+        },
+        {
+          "x": 110, "y": 100,
+          "width": 40, "height": 10,
+          "type": "trampoline"
+        },
+        {
+          "x": 170, "y": 60,
+          "width": 40, "height": 10,
+          "type": "trampoline"
+        },
+        {
+          "x": 160, "y": 20,
+          "width": 5, "height": 160,
+          "type": "wall"
+        },
+        {
+          "x": 170, "y": 110,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 240, "y": 0,
+          "width": 5, "height": 120,
+          "type": "wall"
+        },
+        {
+          "x": 270, "y": 0,
+          "width": 5, "height": 60,
+          "type": "shadowWall"
+        },
+        {
+          "x": 280, "y": 80,
+          "width": 40, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 250, "y": 120,
+          "width": 40, "height": 10,
+          "type": "normal"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Trace Platforms",
+      "description": "Hibrit duvarlar ve gölge bırakan platformlar.",
+      "reqShadows": 5,
+      "platforms": [
+        {
+          "x": 300, "y": 20,
+          "width": 16, "height": 16,
+          "type": "goal"
+        },
+        {
+          "x": 0, "y": 0,
+          "width": 16, "height": 16,
+          "type": "spawn"
+        },
+        { 
+          "x": 0, "y": 160,
+          "width": 320, "height": 20,
+          "type": "ground"
+        },
+        { 
+          "x": 0, "y": 130,
+          "width": 40, "height": 10,
+          "type": "tracePlatform"
+        },
+        { 
+          "x": 60, "y": 100,
+          "width": 5, "height": 80,
+          "type": "wall"
+        },
+        {
+          "x": 80, "y": 120,
+          "width": 30, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 130, "y": 0,
+          "width": 5, "height": 110,
+          "type": "hybridWall"
+        },
+        { 
+          "x": 150, "y": 120,
+          "width": 35, "height": 10,
+          "type": "trampoline"
+        },
+        { 
+          "x": 210, "y": 40,
+          "width": 5, "height": 140,
+          "type": "wall"
+        },
+        {
+          "x": 220, "y": 70,
+          "width": 30, "height": 10,
+          "type": "tracePlatform"
+        },
+        {
+          "x": 245, "y": 100,
+          "width": 30, "height": 10,
+          "type": "normal"
+        },
+        {
+          "x": 220, "y": 130,
+          "width": 30, "height": 10,
+          "type": "normal"
+        },
+        { 
+          "x": 280, "y": 0,
+          "width": 5, "height": 140,
+          "type": "wall"
+        },
+        { 
+          "x": 290, "y": 130,
+          "width": 25, "height": 10,
+          "type": "trampoline"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Thin Wall",
+      "description": "Biraz da eğlenelim.",
+      "reqShadows": 3,
+      "maxRooms": 2,
+      "rooms": [
+        {
+          "id": 1,
+          "platforms": [
+            { "x": 280, "y": 0, "width": 16, "height": 16, "type": "goal" },
+            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
+            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
+            { "x": 0, "y": 170, "width": 20, "height": 10, "type": "tracePlatform" },
+            { "x": 25, "y": 140, "width": 295, "height": 10, "type": "tracePlatform" },
+            { "x": 25, "y": 60, "width": 295, "height": 10, "type": "tracePlatform" },
+            { "x": 180, "y": 80, "width": 2, "height": 100, "type": "shadowWall" },
+            { "x": 170, "y": 100, "width": 30, "height": 10, "type": "normal" },
+            { "x": 17, "y": 0, "width": 10, "height": 140, "type": "wall" }
+          ]
+        },
+        {
+          "id": 2,
+          "platforms": [
+            { "x": 280, "y": 120, "width": 16, "height": 16, "type": "goal" },
+            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
+            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
+            { "x": 0, "y": 60, "width": 20, "height": 10, "type": "tracePlatform" },
+            { "x": 25, "y": 110, "width": 100, "height": 10, "type": "tracePlatform" },
+            { "x": 120, "y": 150, "width": 200, "height": 10, "type": "tracePlatform" },
+            { "x": 180, "y": 80, "width": 2, "height": 100, "type": "shadowWall" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Finale",
+      "description": "Tamam, sen kazandın.",
+      "reqShadows": 10,
+      "maxRooms": 1,
+      "rooms": [
+        {
+          "id": 1,
+          "platforms": [
+            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
+            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
+            { "x": 300, "y": 0, "width": 16, "height": 16, "type": "goal" },
+            { "x": 290, "y": 0, "width": 10, "height": 180, "type": "wall" },
+            { "x": 60, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
+            { "x": 60, "y": 20, "width": 40, "height": 20, "type": "shadowWall" },
+            { "x": 60, "y": 80, "width": 40, "height": 20, "type": "shadowWall" },
+            { "x": 60, "y": 140, "width": 40, "height": 20, "type": "shadowWall" },
+            { "x": 120, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
+            { "x": 160, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
+            { "x": 120, "y": 20, "width": 20, "height": 40, "type": "shadowWall" },
+            { "x": 140, "y": 60, "width": 10, "height": 40, "type": "shadowWall" },
+            { "x": 150, "y": 100, "width": 10, "height": 40, "type": "shadowWall" },
+            { "x": 190, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
+            { "x": 190, "y": 20, "width": 30, "height": 10, "type": "shadowWall" },
+            { "x": 220, "y": 30, "width": 10, "height": 30, "type": "shadowWall" },
+            { "x": 230, "y": 60, "width": 10, "height": 60, "type": "shadowWall" },
+            { "x": 190, "y": 150, "width": 30, "height": 10, "type": "shadowWall" },
+            { "x": 220, "y": 120, "width": 10, "height": 30, "type": "shadowWall" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  height: 100dvh;
+  width: 100%;
+  background: #E0E1EB;
+}
+
+#gameDiv {
+  position: relative;
+  margin: 0;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#canvas {
+  border: 2px solid black;
+  background: #55D63C;
+  width: min(90vw, 90vh * (16/9));
+  aspect-ratio: 16 / 9;
+  z-index: 1;
+}
+
+#upBtn,
+#downBtn,
+#leftBtn,
+#rightBtn,
+#shadowBtn {
+  position: absolute;
+  z-index: 2;  /* canvas’ın üstünde */
+  width: 60px;
+  height: 60px;
+  opacity: 0.6;
+  font-weight: bold;
+  border: 2px solid black;
+  border-radius: 4px;
+  background: #74778F;
+  font-size: 22px;
+}
+
+#shadowBtn { bottom: 200px; right: 20px; }
+#upBtn { bottom: 120px; right: 20px; }
+#downBtn { bottom: 40px; right: 20px; }
+#leftBtn { bottom: 80px; left: 20px; }
+#rightBtn { bottom: 80px; left: 100px; }
+
+#rotateWarning {
+  position: fixed;
+  inset: 0;
+  background: black;
+  color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 999;
+  font-size: 20px;
+}
+
+@media (orientation: portrait) {
+  #rotateWarning {
+    display: flex;
+  }
+
+  #gameWrapper {
+    display: none;
+  }
+}
+
+/* INFO OVERLAY */
+#infoContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* metin sola yaslı */
+  padding: 10px;
+  max-width: 150px; /* isteğe göre daralt */
+}
+
+#levelText, #levelDesc {
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 6px;
+  border-left: 3px solid #ffd700;
+  padding: 6px 4px;
+  font-size: clamp(10px, 1.2vw, 14px);
+  line-height: 1.2;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+  margin-bottom: 4px;
+  margin-top: 0;
+}

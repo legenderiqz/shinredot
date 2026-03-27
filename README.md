@@ -14,8 +14,12 @@ Mobil cihazda (SPCK Editor kullanılarak) geliştirildiği için kod yapısı ve
 - Bazı hatalar ve buglar bulunabilir
 - Performans cihazdan cihaza değişebilir
 
+## Oynanış
+https://legenderiqz.github.io/shinredot/
+
 ## Kontroller
 - Hareket ve zıplama için ekrandaki butonları kullanın
+- Sağ üstteki buton ile haritada istediğiniz yere gölgeler bırakın ve her seviyeyi bitirdiğinizde kendi gölgenizle yaptığınız parkuru da geçin.
 
 ## Durum
 Geliştirme durduruldu / yarım proje

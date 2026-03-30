@@ -29,8 +29,20 @@ async function init() {
   initUI();
   initRendering(ctx);
   await loadLevel(gs.currentLevelId);
+  setRealHeight();
   requestAnimationFrame(loop);
 }
 
+function setRealHeight() {
+  requestAnimationFrame(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', vh + 'px');
+  });
+}
+
+setRealHeight();
 
 init();
+
+window.addEventListener('resize', setRealHeight);
+window.addEventListener('orientationchange', setRealHeight);

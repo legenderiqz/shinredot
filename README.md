@@ -21,5 +21,8 @@ https://legenderiqz.github.io/shinredot/
 - Hareket ve zıplama için ekrandaki butonları kullanın
 - Sağ üstteki buton ile haritada istediğiniz yere gölgeler bırakın ve her seviyeyi bitirdiğinizde kendi gölgenizle yaptığınız parkuru da geçin.
 
-## Durum
-Geliştirme durduruldu / yarım proje
+## Yenilikler
+v1.0.1: 
+- Yazı tipi düzeltildi.
+- Bazı hatalar giderildi.
+- Sayfanın görünüşü üzerinde iyileştirmeler yapıldı.

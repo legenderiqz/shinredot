@@ -2,6 +2,29 @@
 import { gs } from './data/state.js';
 import { CONFIG } from './data/config.js';
 
+// SAVE SYSTEM
+export function getSaveData() {
+  return {
+    version: gs.version,
+    totalCoins: gs.totalCoins,
+    currentLevelId: gs.currentLevelId,
+    currentRoomId: gs.currentRoomId,
+    totalJumps: gs.totalJumps,
+    totalShadows: gs.totalShadows
+  };
+}
+
+export function saveGame() {
+  const data = getSaveData();
+  localStorage.setItem('shinredot_save', JSON.stringify(data));
+}
+
+export function queueSave() {
+  gs.saveQueued = true;
+  gs.saveTimer = 0.5;
+}
+// ------------
+
 // ---- UPDATE & LEVELS ----
 export function update(dt) {
   if (!gs.currentLevelData) return;
@@ -10,13 +33,25 @@ export function update(dt) {
   tryMove(dt);
   applyGravity(dt, true);  // Gravity uygulansın, y konumu henüz güncellenmesin
   checkPlatCollision(dt);  // Platform ve ground çarpışmalarını kontrol et
+  checkCollectables(); // Collectable kontrolü
+  updateCoinEffects();
   finalizeGravity(dt);     // Gravity sonucu y konumunu güncelle
   clampPosition();         // Oyuncuyu ekran sınırları içinde tut
-  
+  gs.time += dt;
   gs.keys.upPressed = false; // Sadece tıklandığı an true
 }
 
 export function checkUpdateConditions(dt) {
+  if (gs.saveQueued) {
+    gs.saveTimer -= dt;
+
+    if (gs.saveTimer <= 0) {
+      saveGame();
+
+      gs.saveQueued = false;
+    }
+  }
+
   if (gs.goalCooldown > 0) {
     gs.goalCooldown -= 1;
     if (gs.goalCooldown <= 0) {
@@ -38,13 +73,15 @@ export function checkUpdateConditions(dt) {
 // Bir sonraki seviyeye geçiş
 export function nextLevel() {
   const level = gs.currentLevelData;
-
+  
   if (level.maxRooms && gs.currentRoomId < level.maxRooms) {
     gs.currentRoomId++;
   } else {
     gs.currentLevelId++;
     gs.currentRoomId = 1;
   }
+  queueSave();
+  gs.platformsDirty = true;
 }
 
 // Level resetleme (shadow veya normal mod geçişi)
@@ -55,9 +92,9 @@ export function restartLevel() {
   gs.player.y = CONFIG.SPAWN_Y;
   gs.shadows = [];
   gs.shadowCount = 0;
+  gs.platformsDirty = true;
 }
 // ------------
-
 
 // ---- MOVEMENT ----
 // Hareket (Zıplama Hariç)
@@ -77,6 +114,7 @@ export function tryMove(dt) {
   // Zıplama
   if (gs.keys.up && (p.onGround || gs.coyoteTimer > 0) && !gs.keys.down) {
     p.vy = CONFIG.JUMP_FORCE;
+    gs.totalJumps++;
     p.onGround = false;
     gs.coyoteTimer = 0;
   }
@@ -135,36 +173,62 @@ export function checkPlatCollision(dt) {
 }
 
 export function setPlatforms() {
-  if (gs.currentMode === 'normal') {
-    return gs.currentLevelData.platforms || [];
-  } else if (gs.currentMode === 'shadow') {
-    const specialPlatforms = (gs.currentLevelData.platforms || []).filter(
-      plat => 
-      plat.type === 'ground' ||
-      plat.type === 'goal' ||
-      plat.type === 'spawn' ||
-      plat.type === 'shadowWall' ||
-      plat.type === 'hybridWall'
-    );
-    const shadowPlatforms = gs.shadows.map(shadow => ({
-      x: shadow.x,
-      y: shadow.y,
-      width: shadow.size,
-      height: shadow.size,
-      type: 'shadow'
-    }));
-    return [...specialPlatforms, ...shadowPlatforms];
+
+  if (!gs.platformsDirty) {
+    return gs.cachedPlatforms;
   }
+
+  if (gs.currentMode === 'normal') {
+
+    gs.cachedPlatforms =
+      gs.currentLevelData.platforms || [];
+
+  } else {
+
+    const result = [];
+
+    for (const plat of gs.currentLevelData.platforms) {
+
+      if (
+        plat.type === 'ground' ||
+        plat.type === 'goal' ||
+        plat.type === 'spawn' ||
+        plat.type === 'shadowWall' ||
+        plat.type === 'hybridWall'
+      ) {
+        result.push(plat);
+      }
+    }
+
+    for (const shadow of gs.shadows) {
+
+      result.push({
+        x: shadow.x,
+        y: shadow.y,
+        width: shadow.size,
+        height: shadow.size,
+        type: 'shadow'
+      });
+    }
+
+    gs.cachedPlatforms = result;
+  }
+
+  gs.platformsDirty = false;
+
+  return gs.cachedPlatforms;
 }
 
 export function checkPlatforms(dt, p, activePlatforms) {
   gs.onTracePlatform = false;
+  gs.onNoShadowPlatform = false;
+  
   gs.currentLevelData.platforms.forEach((plat, index) => {
     plat._id = index; // otomatik unique ID
   });
   
   for (const plat of activePlatforms) {
-    if (plat.type === 'spawn' || (plat.type === 'shadowWall' && gs.currentMode === 'normal')) continue;
+    if (plat.type === 'spawn' || (plat.type === 'shadowWall' && gs.currentMode === 'normal') || plat.type === 'coin') continue;
     
     const nextY = p.y + p.vy * dt * CONFIG.FRAME_RATE;
 
@@ -188,6 +252,7 @@ export function checkPlatforms(dt, p, activePlatforms) {
       checkGoal(isColliding)
       continue;
     }
+    
 
     // AABB çarpışma
     const hitX = px2 > platX1 && px1 < platX2;
@@ -225,7 +290,7 @@ export function checkPlatforms(dt, p, activePlatforms) {
       }
     }
 
-    // Sadece üstten çarpışma (ground, trampoline)
+    // Sadece üstten çarpışma
     const hitYTop = py2 <= platY1 && nextY + p.size >= platY1;
     if (hitX && hitYTop && p.vy >= 0) {
       if (plat.type === 'ground' && gs.currentMode === 'shadow') {
@@ -237,6 +302,14 @@ export function checkPlatforms(dt, p, activePlatforms) {
         p.vy = CONFIG.JUMP_FORCE * CONFIG.TRAMPOLINE_FORCE;
         p.onGround = false;
         return;
+      }
+      
+      if (plat.type === 'noShadow') {
+        gs.onNoShadowPlatform = true;
+        gs.noShadowLock = true;
+      } else {
+        // başka platforma değince lock kaldır
+        gs.noShadowLock = false;
       }
       
       checkTracePlatforms(p, plat);
@@ -294,11 +367,72 @@ export function goalReached() {
     // ❗ trace state temizle
     gs.activeTraceShadow = null;
     gs.onTracePlatform = false;
+    gs.onNoShadowPlatform = false;
+    gs.noShadowLock = false;
 
   } else if (gs.currentMode === 'shadow') {
     gs.currentMode = 'normal';
 
     nextLevel(); // sadece state değiştirir
+  }
+  gs.platformsDirty = true;
+}
+
+export function checkCollectables() {
+  const p = gs.player;
+
+  const platforms = gs.currentLevelData.platforms;
+
+  for (const item of platforms) {
+
+    if (item.type !== 'coin') continue;
+    if (item.collected) continue;
+
+    const hit =
+      p.x < item.x + item.width &&
+      p.x + p.size > item.x &&
+      p.y < item.y + item.height &&
+      p.y + p.size > item.y;
+
+    if (hit) {
+      collectCoin(item);
+    }
+  }
+}
+
+export function collectCoin(coin) {
+  coin.collected = true;
+
+  gs.totalCoins++;
+  gs.coinsCollectedInLevel++;
+
+  createCoinEffect(
+    coin.x + coin.width / 2,
+    coin.y + coin.height / 2
+  );
+}
+
+export function createCoinEffect(x, y) {
+  gs.coinEffects.push({
+    x,
+    y,
+    radius: 2,
+    alpha: 1,
+    life: 20
+  });
+}
+
+export function updateCoinEffects() {
+  for (let i = gs.coinEffects.length - 1; i >= 0; i--) {
+    const effect = gs.coinEffects[i];
+
+    effect.radius += 0.4;
+    effect.alpha -= 0.05;
+    effect.life--;
+
+    if (effect.life <= 0) {
+      gs.coinEffects.splice(i, 1);
+    }
   }
 }
 // ------------
@@ -339,12 +473,14 @@ export function addShadowWithLimit(shadow) {
   // Yeni shadow'u ekle
   gs.shadows.push(shadow);
   gs.shadowCount++;
+  gs.totalShadows++;
   
   // Trace shadow referansını kaydet
   if (shadow.source === 'trace' && shadow.platformId !== undefined) {
     if (!gs.activeTraceShadows) gs.activeTraceShadows = {};
     gs.activeTraceShadows[shadow.platformId] = shadow;
   }
+  gs.platformsDirty = true;
 }
 
 // addShadow fonksiyonunu da aynı merkezi fonksiyonu kullanacak şekilde güncelle

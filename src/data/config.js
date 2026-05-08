@@ -3,10 +3,13 @@
 export const CONFIG = {
   C_HEIGHT: 180,
   C_WIDTH: 320,
+  
   P_SPEED: 3,
+  P_SIZE: 16,
+  
   GRAVITY: 0.4, 
   JUMP_FORCE: -7, // Zıplama Gücü
-  CROUCH_FACTOR: 0.5, //Eğilme Yavaşlığı
+  CROUCH_FACTOR: 0.3, //Eğilme Yavaşlığı
   MAX_FALL_SPEED: 10,
   TRAMPOLINE_FORCE: 1.2,
   COYOTE_TIME: 80,

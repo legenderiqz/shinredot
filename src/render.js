@@ -1,18 +1,23 @@
 // orta seviye
 
-import { gameDiv, canvas } from './data/dom.js';
-import { gs } from './data/state.js';
+import { getGameDiv, getCanvas } from './data/dom.js';
+import { gs, createInitialGS } from './data/state.js';
 import { CONFIG } from './data/config.js';
 import { renderLevelText } from './ui.js';
- 
+
 // === VARIABLES ===
 let lastLevelId = null;
 let lastRoomId = null;
+let gameDiv;
+let canvas;
 
 // === INIT === 
 export function initRendering(ctx) {
+  gameDiv = getGameDiv()
+  canvas = getCanvas()
   canvas.height = CONFIG.C_HEIGHT;
   canvas.width = CONFIG.C_WIDTH;
+  ctx.imageSmoothingEnabled = false;
 }
 
 // === RENDER ===
@@ -26,11 +31,13 @@ export async function render(ctx) {
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, CONFIG.C_WIDTH, CONFIG.C_HEIGHT);
   } else if (gs.currentMode === 'normal') {
-    ctx.fillStyle = '#55D63C';
+    ctx.fillStyle = '#98CE59';
     ctx.fillRect(0, 0, CONFIG.C_WIDTH, CONFIG.C_HEIGHT);
   }
   
   drawLevel(ctx)
+  renderCoins(ctx);
+  renderCoinEffects(ctx);
   
   // Shadows
   gs.shadows.forEach(shadow => {
@@ -39,13 +46,55 @@ export async function render(ctx) {
   });
   
   // Player
-  ctx.fillStyle = '#111'
+  applyColor1(ctx)
   ctx.fillRect(
-    gs.player.x,
-    gs.player.y,
+    Math.round(gs.player.x),
+    Math.round(gs.player.y),
     gs.player.size,
     gs.player.size
   )
+  
+  applyColor2(ctx)
+  ctx.fillRect(
+    Math.round(gs.player.x + 2),
+    Math.round(gs.player.y + 2),
+    gs.player.size - 4,
+    gs.player.size - 4
+  )
+}
+
+export function applyColor1(ctx) {
+  // Shadow kilidi yok ve tracede değil
+  if (!gs.noShadowLock && !gs.onTracePlatform) {
+    ctx.fillStyle = '#111'
+  } else if (
+    gs.noShadowLock && 
+    !gs.onTracePlatform
+  ) {
+    ctx.fillStyle = 'blue'
+  } else if (
+    !gs.noShadowLock &&
+    gs.onTracePlatform
+  ) {
+    ctx.fillStyle = 'purple'
+  }
+}
+
+export function applyColor2(ctx) {
+  // Shadow kilidi yok ve tracede değil
+  if (!gs.noShadowLock && !gs.onTracePlatform) {
+    ctx.fillStyle = '#444'
+  } else if (
+    gs.noShadowLock && 
+    !gs.onTracePlatform
+  ) {
+    ctx.fillStyle = '#444'
+  } else if (
+    !gs.noShadowLock &&
+    gs.onTracePlatform
+  ) {
+    ctx.fillStyle = '#444'
+  }
 }
 
 export async function levelOrRoomIncreased() {
@@ -65,10 +114,14 @@ export function drawLevel(ctx) {
   if (!lvl) return;
   
   if (gs.currentMode === 'normal' && lvl.platforms) {
-    lvl.platforms.forEach(platform => {
-      
+  
+    for (const platform of lvl.platforms) {
+    
+      // Coinleri platform renderer'da çizme
+      if (platform.type === 'coin') continue;
+    
       setNormalColors(ctx, platform);
-      
+    
       // Platform
       ctx.fillRect(
         platform.x,
@@ -76,8 +129,7 @@ export function drawLevel(ctx) {
         platform.width,
         platform.height
       );
-      
-    });
+    }
   }
   
   else if (gs.currentMode === 'shadow' && lvl.platforms) {
@@ -110,9 +162,31 @@ export function drawLevel(ctx) {
   }
 }
 
+function normalizePlatform(p) {
+
+  // Compact syntax
+  if (Array.isArray(p)) {
+
+    return {
+      type: p[0],
+      x: p[1],
+      y: p[2],
+      width: p[3],
+      height: p[4],
+
+      // defaults
+      collected: false
+    };
+  }
+
+  // Eski syntax desteklenmeye devam
+  return p;
+}
+
 export async function loadLevel(levelId, roomId = 1) {
   const response = await fetch('./src/data/levels.json');
   const data = await response.json();
+  gs.version = data.version;
 
   const level = data.levels.find(l => l.id === levelId);
   if (!level) return;
@@ -122,9 +196,9 @@ export async function loadLevel(levelId, roomId = 1) {
   if (level.rooms) {
     const room = level.rooms.find(r => r.id === roomId);
     if (!room) return;
-    platforms = room.platforms;
+    platforms = room.platforms.map(normalizePlatform);
   } else {
-    platforms = level.platforms;
+    platforms = level.platforms.map(normalizePlatform);
   }
 
   gs.currentLevelData = {
@@ -155,6 +229,8 @@ export async function loadLevel(levelId, roomId = 1) {
     gs.player.vy = 0;
     gs.player.onGround = false;
   }
+  
+  gs.platformsDirty = true;
 }
 
 export function checkLevelConditions() {
@@ -197,7 +273,10 @@ export function setNormalColors(ctx, platform) {
       ctx.fillStyle = '#444';
       break;
     case 'tracePlatform':
-      ctx.fillStyle = 'purple';
+      ctx.fillStyle = 'rebeccapurple';
+      break;
+    case 'noShadow':
+      ctx.fillStyle = 'blue';
       break;
     default:
       ctx.fillStyle = '#000'
@@ -231,5 +310,67 @@ export function setShadowColors(ctx, platform) {
     default:
       ctx.fillStyle = '#000'
       break;
+  }
+}
+
+export function renderCoins(ctx) {
+  const plats = gs.currentLevelData.platforms;
+  
+  for (const item of plats) {
+    
+    if (item.type !== 'coin') continue;
+    if (item.collected) continue;
+    
+    const t = gs.time * 0.004;
+    const glow = 0.5 + Math.sin(t) * 0.5;
+    
+    ctx.save();
+    
+    ctx.globalAlpha = 0.7 + glow * 0.3;
+    
+    ctx.fillStyle = '#8DF0FF';
+    
+    ctx.fillRect(
+      item.x,
+      item.y,
+      item.width,
+      item.height
+    );
+    
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 1;
+    
+    ctx.strokeRect(
+      item.x,
+      item.y,
+      item.width,
+      item.height
+    );
+    
+    ctx.restore();
+  }
+}
+
+export function renderCoinEffects(ctx) {
+  renderLevelText();
+  for (const effect of gs.coinEffects) {
+    ctx.save();
+
+    ctx.globalAlpha = effect.alpha;
+    ctx.strokeStyle = 'yellow';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.arc(
+      effect.x,
+      effect.y,
+      effect.radius,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.stroke();
+
+    ctx.restore();
   }
 }

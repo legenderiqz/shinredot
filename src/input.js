@@ -1,5 +1,5 @@
 
-import { gs } from './data/state.js';
+import { gs, createInitialGS } from './data/state.js';
 import { addShadow } from './update.js';
 
 export function buttonInteractions(up, down, left, right, shadow) {
@@ -27,9 +27,87 @@ export function buttonInteractions(up, down, left, right, shadow) {
   });
   
   shadow.addEventListener('touchstart', () => {
-    if (gs.currentMode !== 'normal') return;
-    if (!gs.onTracePlatform && gs.currentLevelId !== 7) {
+    if (
+      gs.currentMode !== 'normal' ||
+      gs.noShadowLock
+    ) return;
+    
+    if (!gs.onTracePlatform && !gs.onNoShadowPlatform && gs.currentLevelId !== 7) {
       addShadow(gs.player.x, gs.player.y);
     }
   });
+}
+
+export function menuInteractions(play) {
+  const startGame = () => {
+    const menuDiv = document.getElementById('menuDiv');
+    const gameDiv = document.getElementById('gameDiv');
+
+    if (menuDiv) menuDiv.style.display = 'none';
+    if (gameDiv) gameDiv.style.display = 'flex';
+
+    gs.scene = 'game';
+  };
+
+  play.addEventListener('pointerup', startGame);
+}
+
+
+export function setupSettingsEvents() {
+  const settingsBtn = document.getElementById('settings-btn');
+  const overlay = document.getElementById('settings-overlay');
+  const closeBtn = document.getElementById('set-close');
+  const statsBtn = document.getElementById('stats-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  
+  settingsBtn.addEventListener('click', () => {
+    overlay.classList.add('active');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    overlay.classList.remove('active');
+  });
+  
+  statsBtn.onclick = () => {
+    overlay.classList.remove("active");
+    gs.statsRequest = true;
+  }
+  
+  resetBtn.onclick = () => {
+    overlay.classList.remove("active");
+    gs.resetRequest = true;
+  }
+}
+
+export function setupStatsEvents() {
+  const statsClose = document.getElementById('stats-close');
+  const overlay = document.getElementById('stats-overlay');
+  const setOverlay = document.getElementById('settings-overlay');
+
+  statsClose.onclick = () => {
+    setOverlay.classList.add("active");  
+    overlay.classList.remove("active");
+  }
+}
+
+export function setupResetEvents() {
+  const resetClose = document.getElementById('reset-close');
+  const resetConfirm = document.getElementById('reset-confirm');
+  const overlay = document.getElementById('reset-overlay');
+  const setOverlay = document.getElementById('settings-overlay');
+
+  resetClose.onclick = () => {
+    setOverlay.classList.add("active");  
+    overlay.classList.remove("active");
+  };
+
+  resetConfirm.onclick = () => {
+    applyReset();
+  };
+}
+
+export function applyReset() {
+  localStorage.removeItem('shinredot_save');
+  Object.assign(gs, createInitialGS());
+  location.reload();
 }

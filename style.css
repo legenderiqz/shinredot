@@ -19,10 +19,9 @@ body {
 }
 
 #gameDiv {
+  display: none;
   height: calc(var(--vh) * 100);
   width: 100%;
-
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -30,13 +29,28 @@ body {
 #canvas {
   display: block;
   border: 2px solid black;
-  background: #55D63C;
+  background: #98CE59;
 
   width: min(90vw, calc(var(--vh) * 90 * 16 / 9));
   aspect-ratio: 16 / 9;
 
   box-sizing: border-box;
+  image-rendering: pixelated;
 }
+
+button {      
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;      
+  text-align: center;
+}
+
+button i {
+  vertical-align: middle;
+}
+
+button:active {      
+  transform: scale(0.97);
+  filter: brightness(0.92);      
+}      
 
 #upBtn,
 #downBtn,
@@ -45,19 +59,19 @@ body {
 #shadowBtn {
   position: absolute;
   z-index: 2;  /* canvas’ın üstünde */
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   opacity: 0.6;
   font-weight: bold;
   border: 2px solid black;
   border-radius: 4px;
   background: #74778F;
-  font-size: 22px;
+  font-size: 24px;
 }
 
-#shadowBtn { bottom: 200px; right: 20px; }
-#upBtn { bottom: 120px; right: 20px; }
-#downBtn { bottom: 40px; right: 20px; }
+#shadowBtn { bottom: 200px; right: 50px; }
+#upBtn { bottom: 120px; right: 50px; }
+#downBtn { bottom: 40px; right: 50px; }
 #leftBtn { bottom: 80px; left: 20px; }
 #rightBtn { bottom: 80px; left: 100px; }
 
@@ -110,4 +124,332 @@ body {
   text-align: left;
   margin-bottom: 4px;
   margin-top: 0;
+}
+
+/* Menü genel */
+#menuDiv {
+  height: calc(var(--vh) * 100);
+  width: 100%;
+
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #0f0f0f, #3B3A3A);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* İç container */
+#menuContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(20px, 4vh, 40px);
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Başlık */
+#titleDiv {
+  font-size: clamp(28px, 6vw, 64px);
+  color: white;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(255,255,255,0.2);
+}
+
+/* Buton */
+#playBtn {
+  width: 100%;
+  max-width: 300px;
+
+  padding: clamp(12px, 2vh, 18px);
+  font-size: clamp(16px, 2.5vw, 22px);
+
+  border: none;
+  border-radius: 14px;
+  background: #55D63C;
+  color: #111;
+  font-weight: bold;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+@media (hover: hover) {
+  #playBtn:hover {
+    transform: scale(1.05);
+    background: #6fff4a;
+  }
+}
+
+/* Hover (PC için) */
+#playBtn:hover {
+  transform: scale(1.05);
+  background: #6fff4a;
+}
+
+/* Basılma efekti */
+#playBtn:active {
+  transform: scale(0.95);
+}
+
+/* ==== Settings ==== */
+
+#settings-btn {
+  position: fixed; /* absolute yerine fixed */
+  top: 10px;
+  right: 10px;
+  z-index: 2000;
+  background: #bdbdbd;
+  color: white;
+  border: none;
+  border-radius: 30%;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  z-index: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+#settings-overlay {        
+  position: fixed;        
+  inset: 0;        
+  background: rgba(0,0,0,0.6);        
+  display: flex;        
+  align-items: center;      
+  justify-content: center;        
+  opacity: 0;        
+  pointer-events: none;        
+  z-index: 1000;        
+  transition: opacity 0.2s ease;        
+}        
+        
+#settings-overlay.active {        
+  opacity: 1;        
+  pointer-events: all;        
+}        
+
+.set-menu {      
+  position: relative;      
+  background: #f7f5f0;      
+  padding: 48px 20px 20px;      
+  border-radius: 14px;      
+  display: flex;      
+  flex-direction: column;      
+  gap: 10px;      
+  min-width: 220px;
+  max-width: 90vw;
+  width: 320px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}      
+        
+.set-menu button {        
+  width: 100%;        
+  padding: 14px;        
+  border-radius: 10px;        
+  border: none;        
+  background: #bfc7c9;        
+  cursor: pointer;        
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}      
+
+#set-title {
+  position: absolute;
+  top: 6px;
+  left: 64px;
+  font-size: 20px;
+  margin-top: 4px;
+  padding: 0 64px 0 64px;
+  line-height: 32px;
+  background: #f7f5f0;
+  border-radius: 10px;        
+  border: none;        
+  height: 36px;
+}
+
+#set-close {      
+  position: absolute;      
+  top: 8px;      
+  right: 8px;      
+  width: 36px;      
+  height: 36px;      
+  background: #828282;      
+  border-radius: 10px;      
+  font-size: 18px;      
+  padding: 0;      
+}      
+
+.set-btns button {      
+  width: 100%;      
+  padding: 14px;      
+  margin: 2px;      
+  font-size: 16px;      
+}      
+
+#set-reset {      
+  background-color: #E04444;      
+}   
+
+/* ==== STATS ==== */
+
+#stats-overlay {        
+  position: fixed;        
+  inset: 0;        
+  background: rgba(0,0,0,0.6);        
+  display: flex;        
+  align-items: center;      
+  justify-content: center;        
+  opacity: 0;        
+  pointer-events: none;        
+  z-index: 1000;        
+  transition: opacity 0.2s ease;        
+}        
+        
+#stats-overlay.active {        
+  opacity: 1;        
+  pointer-events: all;        
+}        
+
+.stats-menu {      
+  position: relative;      
+  background: #f7f5f0;      
+  padding: 48px 20px 20px;      
+  border-radius: 14px;      
+  display: flex;      
+  flex-direction: column;      
+  gap: 10px;      
+  min-width: 220px;
+  max-width: 90vw;
+  width: 360px;
+  height: 180px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}      
+        
+.stats-menu div {        
+  width: 100%;        
+  padding: 8px 4px;  
+  line-height: 1.1em;
+  border-radius: 4px;        
+  border: none;        
+  background: #C9EFFF;  
+  margin-top: 4px;
+  font-size: 12px;
+}      
+
+#stats-title {
+  position: absolute;
+  top: 6px;
+  left: 20px;
+  font-size: 18px;
+  margin-top: 4px;
+  padding: 0 70px;
+  line-height: 30px;
+  background: #C9EFFF;
+  border-radius: 10px;        
+  border: none;        
+  height: 32px;
+}
+
+#stats-close {      
+  position: absolute;      
+  top: 10px;      
+  right: 8px;      
+  width: 36px;      
+  height: 36px;      
+  background: #828282;      
+  border-radius: 10px;      
+  font-size: 18px;      
+  padding: 0;      
+  border: none;
+}      
+
+/* ==== RESET ==== */
+
+#reset-btn {
+  background: firebrick;
+}
+
+#reset-overlay {        
+  position: fixed;        
+  inset: 0;        
+  background: rgba(0,0,0,0.6);        
+  display: flex;        
+  align-items: center;      
+  justify-content: center;        
+  opacity: 0;        
+  pointer-events: none;        
+  z-index: 1000;        
+  transition: opacity 0.2s ease;        
+}        
+        
+#reset-overlay.active {        
+  opacity: 1;        
+  pointer-events: all;        
+}        
+
+.reset-menu {      
+  position: relative;      
+  background: #f7f5f0;      
+  padding: 48px 20px 20px;      
+  border-radius: 14px 0 14px 14px;      
+  display: flex;      
+  flex-direction: column;      
+  gap: 10px;      
+  min-width: 180px;
+  max-width: 85vw;
+  width: 220px;
+  height: 160px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}      
+      
+
+#reset-title {
+  position: absolute;
+  top: 10px;
+  left: 5px;
+  font-size: 16px;
+  margin-top: 4px;
+  padding: 8px 4px 0 8px;
+  line-height: 16px;
+  background: #C9EFFF;
+  border-radius: 10px;        
+  border: none;        
+  height: 32px;
+}
+
+#reset-close {      
+  position: absolute;      
+  top: -4px;  
+  left: 260px;      
+  width: 42px;      
+  height: 42px;      
+  background: #828282;      
+  border-radius: 0 10px 10px 0;      
+  font-size: 18px;      
+  padding: 0;      
+  border: none;
+}      
+
+.reset-menu button {      
+  width: 100%;        
+  padding: 8px 4px;  
+  line-height: 1.1em;
+  border-radius: 4px;        
+  border: none;        
+  background: #C9EFFF;  
+  margin-top: 4px;
+  font-size: 12px;
+}      
+
+#reset-confirm {
+  width: 95%;
+  background: tomato;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin: 120px 0 0 5px;
+  font-size: 16px;
 }

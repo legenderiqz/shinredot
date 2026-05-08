@@ -1,37 +1,18 @@
 {
-  "version": "v1.0.1",
+  "version": "v1.1.0",
   "levels": [
     {
       "id": 1,
       "name": "In the Shadows",
-      "description": "Gölge bırak, dikkatli ol.",
+      "description": "Parkur şeklinde gölgeler bırak.",
       "reqShadows": 5,
       "platforms": [
-        {
-          "x": 300, "y": 60,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        {
-          "x": 20, "y": 20,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        { 
-          "x": 50, "y": 120,
-          "width": 60, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 150, "y": 80,
-          "width": 80, "height": 10,
-          "type": "normal"
-        }
+        ["goal", 300, 60, 16, 16],
+        ["spawn", 20, 20, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["normal", 50, 120, 60, 10],
+        ["normal", 150, 80, 80, 10],
+        ["coin", 180, 40, 10, 10]
       ]
     },
     {
@@ -40,157 +21,52 @@
       "description": "Trambolinler biraz şeydir...",
       "reqShadows": 5,
       "platforms": [
-        {
-          "x": 300, "y": 20,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        {
-          "x": 20, "y": 20,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        { 
-          "x": 40, "y": 80,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 80, "y": 120,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 120, "y": 60,
-          "width": 60, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 240, "y": 100,
-          "width": 40, "height": 10,
-          "type": "trampoline"
-        }
+        ["goal", 300, 20, 16, 16],
+        ["spawn", 20, 20, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["normal", 40, 80, 40, 10],
+        ["coin", 55, 40, 10, 10],
+        ["normal", 80, 120, 40, 10],
+        ["normal", 120, 60, 60, 10],
+        ["trampoline", 240, 100, 40, 10]
       ]
     },
     {
       "id": 3,
       "name": "Solid Walls",
-      "description": "Duvarlar geçilmez.",
+      "description": "Duvarlar normal modda geçilmez.",
       "reqShadows": 5,
       "platforms": [
-        { 
-          "x": 300, "y": 20,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        { 
-          "x": 20, "y": 20,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        { 
-          "x": 40, "y": 120,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 60, "y": 0,
-          "width": 5, "height": 80,
-          "type": "wall"
-        },
-        { 
-          "x": 100, "y": 80,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 180, "y": 80,
-          "width": 5, "height": 100,
-          "type": "wall"
-        },
-        { 
-          "x": 220, "y": 100,
-          "width": 40, "height": 10,
-          "type": "trampoline"
-        },
-        { 
-          "x": 260, "y": 130,
-          "width": 40, "height": 10,
-          "type": "normal"
-        }
+        ["goal", 300, 20, 16, 16],
+        ["spawn", 20, 20, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["normal", 40, 120, 40, 10],
+        ["wall", 60, 0, 5, 80],
+        ["normal", 100, 80, 40, 10],
+        ["coin", 115, 60, 10, 10],
+        ["wall", 180, 80, 5, 100],
+        ["trampoline", 220, 100, 40, 10],
+        ["normal", 260, 130, 40, 10]
       ]
     },
     {
       "id": 4,
       "name": "Shadow Walls",
-      "description": "Shadow duvarlar.",
+      "description": "Shadow duvarlar shadow modda geçilmez.",
       "reqShadows": 5,
       "platforms": [
-        {
-          "x": 300, "y": 60,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        {
-          "x": 20, "y": 20,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        {
-          "x": 20, "y": 80,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 80, "y": 0,
-          "width": 5, "height": 80,
-          "type": "shadowWall"
-        },
-        {
-          "x": 60, "y": 120,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 100, "y": 60,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 200, "y": 120,
-          "width": 40, "height": 10,
-          "type": "trampoline"
-        },
-        {
-          "x": 260, "y": 80,
-          "width": 60, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 280, "y": 0,
-          "width": 5, "height": 60,
-          "type": "wall"
-        },
-        {
-          "x": 180, "y": 60,
-          "width": 5, "height": 100,
-          "type": "wall"
-        }
+        ["goal", 300, 60, 16, 16],
+        ["spawn", 20, 20, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["normal", 20, 80, 40, 10],
+        ["shadowWall", 80, 0, 5, 80],
+        ["normal", 60, 120, 40, 10],
+        ["normal", 100, 60, 40, 10],
+        ["coin", 115, 20, 10, 10],
+        ["trampoline", 200, 120, 40, 10],
+        ["normal", 260, 80, 60, 10],
+        ["wall", 280, 0, 5, 60],
+        ["wall", 180, 60, 5, 100]
       ]
     },
     {
@@ -199,71 +75,20 @@
       "description": "Bildiklerini pekiştir.",
       "reqShadows": 5,
       "platforms": [
-        {
-          "x": 300, "y": 60,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        {
-          "x": 20, "y": 20,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        {
-          "x": 30, "y": 120,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 70, "y": 80,
-          "width": 5, "height": 80,
-          "type": "shadowWall"
-        },
-        {
-          "x": 110, "y": 100,
-          "width": 40, "height": 10,
-          "type": "trampoline"
-        },
-        {
-          "x": 170, "y": 60,
-          "width": 40, "height": 10,
-          "type": "trampoline"
-        },
-        {
-          "x": 160, "y": 20,
-          "width": 5, "height": 160,
-          "type": "wall"
-        },
-        {
-          "x": 170, "y": 110,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 240, "y": 0,
-          "width": 5, "height": 120,
-          "type": "wall"
-        },
-        {
-          "x": 270, "y": 0,
-          "width": 5, "height": 60,
-          "type": "shadowWall"
-        },
-        {
-          "x": 280, "y": 80,
-          "width": 40, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 250, "y": 120,
-          "width": 40, "height": 10,
-          "type": "normal"
-        }
+        ["goal", 300, 60, 16, 16],
+        ["spawn", 20, 20, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["normal", 30, 120, 40, 10],
+        ["shadowWall", 70, 80, 5, 80],
+        ["trampoline", 110, 100, 40, 10],
+        ["trampoline", 170, 60, 40, 10],
+        ["wall", 160, 20, 5, 160],
+        ["normal", 170, 110, 40, 10],
+        ["coin", 185, 80, 10, 10],
+        ["wall", 240, 0, 5, 120],
+        ["shadowWall", 270, 0, 5, 60],
+        ["normal", 280, 80, 40, 10],
+        ["normal", 250, 120, 40, 10]
       ]
     },
     {
@@ -272,76 +97,21 @@
       "description": "Hibrit duvarlar ve gölge bırakan platformlar.",
       "reqShadows": 5,
       "platforms": [
-        {
-          "x": 300, "y": 20,
-          "width": 16, "height": 16,
-          "type": "goal"
-        },
-        {
-          "x": 0, "y": 0,
-          "width": 16, "height": 16,
-          "type": "spawn"
-        },
-        { 
-          "x": 0, "y": 160,
-          "width": 320, "height": 20,
-          "type": "ground"
-        },
-        { 
-          "x": 0, "y": 130,
-          "width": 40, "height": 10,
-          "type": "tracePlatform"
-        },
-        { 
-          "x": 60, "y": 100,
-          "width": 5, "height": 80,
-          "type": "wall"
-        },
-        {
-          "x": 80, "y": 120,
-          "width": 30, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 130, "y": 0,
-          "width": 5, "height": 110,
-          "type": "hybridWall"
-        },
-        { 
-          "x": 150, "y": 120,
-          "width": 35, "height": 10,
-          "type": "trampoline"
-        },
-        { 
-          "x": 210, "y": 40,
-          "width": 5, "height": 140,
-          "type": "wall"
-        },
-        {
-          "x": 220, "y": 70,
-          "width": 30, "height": 10,
-          "type": "tracePlatform"
-        },
-        {
-          "x": 245, "y": 100,
-          "width": 30, "height": 10,
-          "type": "normal"
-        },
-        {
-          "x": 220, "y": 130,
-          "width": 30, "height": 10,
-          "type": "normal"
-        },
-        { 
-          "x": 280, "y": 0,
-          "width": 5, "height": 140,
-          "type": "wall"
-        },
-        { 
-          "x": 290, "y": 130,
-          "width": 25, "height": 10,
-          "type": "trampoline"
-        }
+        ["goal", 300, 20, 16, 16],
+        ["spawn", 0, 0, 16, 16],
+        ["ground", 0, 160, 320, 20],
+        ["tracePlatform", 0, 130, 40, 10],
+        ["coin", 15, 145, 10, 10],
+        ["wall", 60, 100, 5, 80],
+        ["normal", 80, 120, 30, 10],
+        ["hybridWall", 130, 0, 5, 110],
+        ["trampoline", 150, 120, 35, 10],
+        ["wall", 210, 40, 5, 140],
+        ["tracePlatform", 220, 70, 30, 10],
+        ["normal", 245, 100, 30, 10],
+        ["normal", 220, 130, 30, 10],
+        ["wall", 280, 0, 5, 140],
+        ["trampoline", 290, 130, 25, 10]
       ]
     },
     {
@@ -354,33 +124,81 @@
         {
           "id": 1,
           "platforms": [
-            { "x": 280, "y": 0, "width": 16, "height": 16, "type": "goal" },
-            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
-            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
-            { "x": 0, "y": 170, "width": 20, "height": 10, "type": "tracePlatform" },
-            { "x": 25, "y": 140, "width": 295, "height": 10, "type": "tracePlatform" },
-            { "x": 25, "y": 60, "width": 295, "height": 10, "type": "tracePlatform" },
-            { "x": 180, "y": 80, "width": 2, "height": 100, "type": "shadowWall" },
-            { "x": 170, "y": 100, "width": 30, "height": 10, "type": "normal" },
-            { "x": 17, "y": 0, "width": 10, "height": 140, "type": "wall" }
+            ["goal", 280, 0, 16, 16],
+            ["spawn", 0, 0, 16, 16],
+            ["ground", 0, 170, 320, 10],
+            ["tracePlatform", 0, 170, 20, 10],
+            ["tracePlatform", 25, 140, 295, 10],
+            ["tracePlatform", 25, 60, 295, 10],
+            ["shadowWall", 180, 80, 2, 100],
+            ["normal", 170, 100, 30, 10],
+            ["wall", 17, 0, 10, 140],
+            ["coin", 260, 120, 10, 10]
           ]
         },
         {
           "id": 2,
           "platforms": [
-            { "x": 280, "y": 120, "width": 16, "height": 16, "type": "goal" },
-            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
-            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
-            { "x": 0, "y": 60, "width": 20, "height": 10, "type": "tracePlatform" },
-            { "x": 25, "y": 110, "width": 100, "height": 10, "type": "tracePlatform" },
-            { "x": 120, "y": 150, "width": 200, "height": 10, "type": "tracePlatform" },
-            { "x": 180, "y": 80, "width": 2, "height": 100, "type": "shadowWall" }
+            ["goal", 280, 120, 16, 16],
+            ["spawn", 0, 0, 16, 16],
+            ["ground", 0, 170, 320, 10],
+            ["tracePlatform", 0, 60, 20, 10],
+            ["tracePlatform", 25, 110, 100, 10],
+            ["tracePlatform", 120, 150, 200, 10],
+            ["shadowWall", 180, 80, 2, 100],
+            ["coin", 25, 140, 10, 10]
           ]
         }
       ]
     },
     {
       "id": 8,
+      "name": "No Shadows Today",
+      "description": "Mavi platform gölge koydurmaz, normal platform koydurur.",
+      "reqShadows": 4,
+      "maxRooms": 2,
+      "rooms": [
+        {
+          "id": 1,
+          "platforms": [
+            ["goal", 280, 0, 16, 16],
+            ["spawn", 0, 0, 16, 16],
+            ["ground", 0, 170, 320, 10],
+            ["noShadow", 0, 40, 40, 10],
+            ["normal", 60, 70, 30, 10],
+            ["trampoline", 30, 140, 30, 10],
+            ["trampoline", 160, 140, 40, 10],
+            ["wall", 180, 0, 5, 80],
+            ["normal", 130, 80, 40, 10],
+            ["noShadow", 200, 80, 40, 10],
+            ["hybridWall", 90, 0, 5, 100],
+            ["hybridWall", 260, 100, 5, 80],
+            ["normal", 290, 140, 30, 10],
+            ["coin", 290, 155, 10, 10]
+          ]
+        },
+        {
+          "id": 2,
+          "platforms": [
+            ["goal", 280, 0, 16, 16],
+            ["spawn", 0, 0, 16, 16],
+            ["ground", 0, 170, 320, 10],
+            ["tracePlatform", 0, 140, 40, 10],
+            ["noShadow", 0, 100, 120, 10],
+            ["normal", 80, 140, 40, 10],
+            ["hybridWall", 100, 0, 5, 80],
+            ["trampoline", 160, 140, 40, 10],
+            ["wall", 200, 80, 5, 100],
+            ["wall", 240, 0, 5, 100],
+            ["trampoline", 280, 120, 40, 10],
+            ["trampoline", 210, 160, 40, 10],
+            ["coin", 140, 10, 10, 10]
+          ]
+        }
+      ]
+    },
+    {
+      "id": 9,
       "name": "Finale",
       "description": "Tamam, sen kazandın.",
       "reqShadows": 10,
@@ -389,25 +207,25 @@
         {
           "id": 1,
           "platforms": [
-            { "x": 0, "y": 170, "width": 320, "height": 10, "type": "ground" },
-            { "x": 0, "y": 0, "width": 16, "height": 16, "type": "spawn" },
-            { "x": 300, "y": 0, "width": 16, "height": 16, "type": "goal" },
-            { "x": 290, "y": 0, "width": 10, "height": 180, "type": "wall" },
-            { "x": 60, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
-            { "x": 60, "y": 20, "width": 40, "height": 20, "type": "shadowWall" },
-            { "x": 60, "y": 80, "width": 40, "height": 20, "type": "shadowWall" },
-            { "x": 60, "y": 140, "width": 40, "height": 20, "type": "shadowWall" },
-            { "x": 120, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
-            { "x": 160, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
-            { "x": 120, "y": 20, "width": 20, "height": 40, "type": "shadowWall" },
-            { "x": 140, "y": 60, "width": 10, "height": 40, "type": "shadowWall" },
-            { "x": 150, "y": 100, "width": 10, "height": 40, "type": "shadowWall" },
-            { "x": 190, "y": 20, "width": 10, "height": 140, "type": "shadowWall" },
-            { "x": 190, "y": 20, "width": 30, "height": 10, "type": "shadowWall" },
-            { "x": 220, "y": 30, "width": 10, "height": 30, "type": "shadowWall" },
-            { "x": 230, "y": 60, "width": 10, "height": 60, "type": "shadowWall" },
-            { "x": 190, "y": 150, "width": 30, "height": 10, "type": "shadowWall" },
-            { "x": 220, "y": 120, "width": 10, "height": 30, "type": "shadowWall" }
+            ["ground", 0, 170, 320, 10],
+            ["spawn", 0, 0, 16, 16],
+            ["goal", 300, 0, 16, 16],
+            ["wall", 290, 0, 10, 180],
+            ["shadowWall", 60, 20, 10, 140],
+            ["shadowWall", 60, 20, 40, 20],
+            ["shadowWall", 60, 80, 40, 20],
+            ["shadowWall", 60, 140, 40, 20],
+            ["shadowWall", 120, 20, 10, 140],
+            ["shadowWall", 160, 20, 10, 140],
+            ["shadowWall", 120, 20, 20, 40],
+            ["shadowWall", 140, 60, 10, 40],
+            ["shadowWall", 150, 100, 10, 40],
+            ["shadowWall", 190, 20, 10, 140],
+            ["shadowWall", 190, 20, 30, 10],
+            ["shadowWall", 220, 30, 10, 30],
+            ["shadowWall", 230, 60, 10, 60],
+            ["shadowWall", 190, 150, 30, 10],
+            ["shadowWall", 220, 120, 10, 30]
           ]
         }
       ]
